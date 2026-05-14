@@ -1,12 +1,11 @@
 import os
-import json
-import whisper
 from flask import Flask, request, jsonify, render_template
 from werkzeug.utils import secure_filename
+from faster_whisper import WhisperModel
 
 app = Flask(__name__)
 app.config["UPLOAD_FOLDER"] = "uploads"
-app.config["MAX_CONTENT_LENGTH"] = 500 * 1024 * 1024  # 500 MB
+app.config["MAX_CONTENT_LENGTH"] = 500 * 1024 * 1024
 
 ALLOWED_EXTENSIONS = {"mp4", "mov", "avi", "mkv", "webm", "mp3", "wav", "m4a", "ogg"}
 
@@ -15,7 +14,7 @@ model = None
 def get_model():
     global model
     if model is None:
-        model = whisper.load_model("base")
+        model = WhisperModel("base", device="cpu", compute_type="int8")
     return model
 
 def allowed_file(filename):
@@ -39,21 +38,24 @@ def transcribe():
 
     filename = secure_filename(file.filename)
     filepath = os.path.join(app.config["UPLOAD_FOLDER"], filename)
+    os.makedirs(app.config["UPLOAD_FOLDER"], exist_ok=True)
     file.save(filepath)
 
     try:
         m = get_model()
-        result = m.transcribe(filepath, language="pt")
-        transcript = result["text"].strip()
+        segments_gen, info = m.transcribe(filepath, language="pt")
 
         segments = []
-        for seg in result.get("segments", []):
+        full_text = []
+        for seg in segments_gen:
             segments.append({
-                "start": round(seg["start"], 2),
-                "end": round(seg["end"], 2),
-                "text": seg["text"].strip()
+                "start": round(seg.start, 2),
+                "end": round(seg.end, 2),
+                "text": seg.text.strip()
             })
+            full_text.append(seg.text.strip())
 
+        transcript = " ".join(full_text)
         return jsonify({"transcript": transcript, "segments": segments})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
