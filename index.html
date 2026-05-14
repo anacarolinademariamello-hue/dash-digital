@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dash Digital | Transcrição de Vídeos e Áudios</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --gold: #F5B731;
+      --gold-light: #FDD068;
+      --gold-dark: #D99B1A;
+      --navy: #1B3A6B;
+      --navy-dark: #122848;
+      --navy-light: #2A5499;
+      --white: #ffffff;
+      --gray-50: #f8f9fc;
+      --gray-100: #f1f3f8;
+      --gray-200: #e2e8f0;
+      --gray-400: #94a3b8;
+      --gray-600: #475569;
+      --gray-800: #1e293b;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--gray-50);
+      color: var(--gray-800);
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: var(--navy);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+      box-shadow: 0 2px 12px rgba(27,58,107,0.25);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-icon {
+      width: 40px;
+      height: 46px;
+    }
+
+    .logo-text {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--gold);
+      letter-spacing: -0.5px;
+    }
+
+    .header-badge {
+      background: rgba(245,183,49,0.15);
+      border: 1px solid rgba(245,183,49,0.35);
+      color: var(--gold-light);
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 50%, var(--navy-light) 100%);
+      padding: 70px 2rem 80px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(245,183,49,0.12) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -80px; left: -40px;
+      width: 250px; height: 250px;
+      background: radial-gradient(circle, rgba(245,183,49,0.08) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .hero-tag {
+      display: inline-block;
+      background: rgba(245,183,49,0.18);
+      border: 1px solid rgba(245,183,49,0.4);
+      color: var(--gold-light);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 6px 16px;
+      border-radius: 20px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 800;
+      color: var(--white);
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--gold);
+    }
+
+    .hero p {
+      font-size: 1.05rem;
+      color: rgba(255,255,255,0.72);
+      max-width: 520px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* ── MAIN CONTENT ── */
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 1.5rem 80px;
+    }
+
+    /* ── UPLOAD CARD ── */
+    .card {
+      background: var(--white);
+      border-radius: 20px;
+      box-shadow: 0 4px 24px rgba(27,58,107,0.09);
+      overflow: hidden;
+      margin-top: -32px;
+      position: relative;
+      z-index: 10;
+    }
+
+    .card-header {
+      background: linear-gradient(90deg, var(--navy) 0%, var(--navy-light) 100%);
+      padding: 20px 28px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .card-header-icon {
+      width: 36px; height: 36px;
+      background: rgba(245,183,49,0.2);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .card-header h2 {
+      color: var(--white);
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    .card-header p {
+      color: rgba(255,255,255,0.6);
+      font-size: 0.78rem;
+      margin-top: 2px;
+    }
+
+    .card-body {
+      padding: 28px;
+    }
+
+    /* ── DROP ZONE ── */
+    .drop-zone {
+      border: 2px dashed var(--gray-200);
+      border-radius: 14px;
+      padding: 48px 24px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      background: var(--gray-50);
+      position: relative;
+    }
+
+    .drop-zone:hover,
+    .drop-zone.dragover {
+      border-color: var(--gold);
+      background: rgba(245,183,49,0.04);
+    }
+
+    .drop-zone input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+    }
+
+    .drop-icon {
+      width: 56px; height: 56px;
+      background: linear-gradient(135deg, rgba(245,183,49,0.15), rgba(27,58,107,0.08));
+      border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 16px;
+    }
+
+    .drop-zone h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 6px;
+    }
+
+    .drop-zone p {
+      font-size: 0.85rem;
+      color: var(--gray-400);
+    }
+
+    .drop-zone .formats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      justify-content: center;
+      margin-top: 16px;
+    }
+
+    .format-tag {
+      background: var(--gray-100);
+      color: var(--gray-600);
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 3px 9px;
+      border-radius: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    /* ── FILE PREVIEW ── */
+    .file-preview {
+      display: none;
+      align-items: center;
+      gap: 14px;
+      background: rgba(27,58,107,0.04);
+      border: 1px solid rgba(27,58,107,0.1);
+      border-radius: 12px;
+      padding: 14px 18px;
+      margin-top: 16px;
+    }
+
+    .file-preview.show { display: flex; }
+
+    .file-icon {
+      width: 40px; height: 40px;
+      background: var(--navy);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .file-info { flex: 1; min-width: 0; }
+    .file-name {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--navy);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .file-size {
+      font-size: 0.75rem;
+      color: var(--gray-400);
+      margin-top: 2px;
+    }
+
+    .remove-file {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--gray-400);
+      padding: 4px;
+      border-radius: 6px;
+      transition: color 0.2s;
+    }
+    .remove-file:hover { color: #e53e3e; }
+
+    /* ── BTN ── */
+    .btn-transcribe {
+      width: 100%;
+      margin-top: 20px;
+      padding: 16px;
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+      color: var(--navy-dark);
+      font-size: 1rem;
+      font-weight: 700;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 4px 16px rgba(245,183,49,0.35);
+    }
+
+    .btn-transcribe:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(245,183,49,0.45);
+    }
+
+    .btn-transcribe:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* ── PROGRESS ── */
+    .progress-section {
+      display: none;
+      margin-top: 20px;
+    }
+
+    .progress-section.show { display: block; }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      color: var(--gray-600);
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+
+    .progress-bar-wrap {
+      background: var(--gray-100);
+      border-radius: 999px;
+      height: 8px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--gold) 0%, var(--gold-dark) 100%);
+      border-radius: 999px;
+      width: 0%;
+      transition: width 0.4s ease;
+      animation: shimmer 1.5s infinite;
+    }
+
+    @keyframes shimmer {
+      0%   { background-position: -200px 0; }
+      100% { background-position: 200px 0; }
+    }
+
+    .status-msg {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.82rem;
+      color: var(--navy);
+      margin-top: 10px;
+      font-weight: 500;
+    }
+
+    .spinner {
+      width: 14px; height: 14px;
+      border: 2px solid var(--gold-light);
+      border-top-color: var(--gold-dark);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      flex-shrink: 0;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── RESULT CARD ── */
+    .result-section {
+      margin-top: 28px;
+      display: none;
+    }
+
+    .result-section.show { display: block; }
+
+    .result-card {
+      background: var(--white);
+      border-radius: 20px;
+      box-shadow: 0 4px 24px rgba(27,58,107,0.09);
+      overflow: hidden;
+    }
+
+    .result-header {
+      background: linear-gradient(90deg, var(--navy) 0%, var(--navy-light) 100%);
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .result-header-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .result-header h3 {
+      color: var(--white);
+      font-size: 0.95rem;
+      font-weight: 700;
+    }
+
+    .result-badge {
+      background: rgba(245,183,49,0.2);
+      border: 1px solid rgba(245,183,49,0.4);
+      color: var(--gold-light);
+      font-size: 0.68rem;
+      font-weight: 600;
+      padding: 3px 9px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .result-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn-action {
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: var(--white);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 7px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-action:hover {
+      background: rgba(255,255,255,0.2);
+    }
+
+    .result-body {
+      padding: 24px;
+    }
+
+    /* ── TABS ── */
+    .tabs {
+      display: flex;
+      gap: 4px;
+      background: var(--gray-100);
+      border-radius: 10px;
+      padding: 4px;
+      margin-bottom: 20px;
+    }
+
+    .tab-btn {
+      flex: 1;
+      background: none;
+      border: none;
+      padding: 9px 12px;
+      border-radius: 7px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--gray-600);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .tab-btn.active {
+      background: var(--white);
+      color: var(--navy);
+      box-shadow: 0 1px 6px rgba(27,58,107,0.12);
+    }
+
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    /* ── TRANSCRIPT TEXT ── */
+    .transcript-text {
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-radius: 12px;
+      padding: 20px;
+      font-size: 0.93rem;
+      line-height: 1.8;
+      color: var(--gray-800);
+      min-height: 140px;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    /* ── SEGMENTS ── */
+    .segments-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      max-height: 400px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .segments-list::-webkit-scrollbar { width: 4px; }
+    .segments-list::-webkit-scrollbar-track { background: var(--gray-100); border-radius: 4px; }
+    .segments-list::-webkit-scrollbar-thumb { background: var(--gray-200); border-radius: 4px; }
+
+    .segment-item {
+      display: flex;
+      gap: 12px;
+      background: var(--gray-50);
+      border-radius: 10px;
+      padding: 12px 14px;
+      border-left: 3px solid var(--gold);
+      transition: background 0.2s;
+    }
+
+    .segment-item:hover { background: rgba(245,183,49,0.06); }
+
+    .segment-time {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--navy);
+      background: rgba(27,58,107,0.07);
+      padding: 3px 8px;
+      border-radius: 6px;
+      white-space: nowrap;
+      height: fit-content;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .segment-text {
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: var(--gray-800);
+    }
+
+    /* ── WORD COUNT ── */
+    .stats-bar {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--gray-200);
+    }
+
+    .stat-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.78rem;
+      color: var(--gray-600);
+    }
+
+    .stat-dot {
+      width: 7px; height: 7px;
+      background: var(--gold);
+      border-radius: 50%;
+    }
+
+    .stat-value {
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    /* ── ERROR ── */
+    .error-box {
+      display: none;
+      background: #fff5f5;
+      border: 1px solid #fed7d7;
+      border-radius: 12px;
+      padding: 14px 18px;
+      color: #c53030;
+      font-size: 0.85rem;
+      font-weight: 500;
+      margin-top: 16px;
+      align-items: center;
+      gap: 10px;
+    }
+    .error-box.show { display: flex; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy-dark);
+      text-align: center;
+      padding: 28px 2rem;
+      color: rgba(255,255,255,0.4);
+      font-size: 0.78rem;
+    }
+
+    footer a {
+      color: var(--gold);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    footer a:hover { text-decoration: underline; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .hero { padding: 50px 1.5rem 70px; }
+      .card-body { padding: 20px; }
+      .result-header { flex-direction: column; gap: 12px; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo-area">
+    <span class="logo-text">Dash Digital</span>
+  </div>
+  <div class="header-badge">Transcrição de Vídeos e Áudios</div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <h1>Transcreva seus vídeos e áudios<br/>com <em>precisão e agilidade</em></h1>
+  <p>Envie seu vídeo ou áudio e receba a transcrição completa em segundos. Tecnologia de inteligência artificial para transformar qualquer conteúdo em texto.</p>
+</section>
+
+<!-- MAIN -->
+<div class="container">
+
+  <!-- UPLOAD CARD -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-header-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+          <path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" stroke="#F5B731" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div>
+        <h2>Enviar Vídeo ou Áudio</h2>
+        <p>Arraste e solte ou clique para selecionar seu vídeo ou áudio</p>
+      </div>
+    </div>
+    <div class="card-body">
+
+      <div class="drop-zone" id="dropZone">
+        <input type="file" id="fileInput" accept="video/*,audio/*,.mp4,.mov,.avi,.mkv,.webm,.mp3,.wav,.m4a,.ogg" />
+        <div class="drop-icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+            <path d="M15 10l-4 4-4-4m4-7v11m-7 4h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" stroke="#1B3A6B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3>Solte seu vídeo ou áudio aqui</h3>
+        <p>Ou clique para selecionar &nbsp;·&nbsp; Tamanho máximo: 500 MB</p>
+        <div class="formats">
+          <span class="format-tag">MP4</span>
+          <span class="format-tag">MOV</span>
+          <span class="format-tag">AVI</span>
+          <span class="format-tag">MKV</span>
+          <span class="format-tag">WEBM</span>
+          <span class="format-tag">MP3</span>
+          <span class="format-tag">WAV</span>
+          <span class="format-tag">M4A</span>
+        </div>
+      </div>
+
+      <div class="file-preview" id="filePreview">
+        <div class="file-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M15 10l-4 4-4-4m4-7v11" stroke="#F5B731" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <rect x="3" y="3" width="18" height="18" rx="3" stroke="#F5B731" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <div class="file-info">
+          <div class="file-name" id="fileName">arquivo.mp4</div>
+          <div class="file-size" id="fileSize">0 MB</div>
+        </div>
+        <button class="remove-file" id="removeFile" title="Remover arquivo">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+            <path d="M6 18L18 6M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="error-box" id="errorBox">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="flex-shrink:0">
+          <circle cx="12" cy="12" r="10" stroke="#c53030" stroke-width="1.8"/>
+          <path d="M12 8v4m0 4h.01" stroke="#c53030" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <span id="errorMsg">Ocorreu um erro.</span>
+      </div>
+
+      <button class="btn-transcribe" id="btnTranscribe" disabled>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+          <path d="M9 19V6l12-3v13M9 19c0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2 2 .9 2 2zm12-3c0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2 2 .9 2 2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Transcrever Agora
+      </button>
+
+      <div class="progress-section" id="progressSection">
+        <div class="progress-label">
+          <span id="progressLabel">Processando...</span>
+          <span id="progressPct">0%</span>
+        </div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <div class="status-msg">
+          <div class="spinner"></div>
+          <span id="statusMsg">Enviando arquivo para análise...</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- RESULT -->
+  <div class="result-section" id="resultSection">
+    <div class="result-card">
+      <div class="result-header">
+        <div class="result-header-left">
+          <h3>Transcrição Concluída</h3>
+          <span class="result-badge">✓ Pronto</span>
+        </div>
+        <div class="result-actions">
+          <button class="btn-action" id="btnCopy">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
+              <rect x="9" y="9" width="13" height="13" rx="2" stroke="currentColor" stroke-width="2"/>
+              <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            Copiar
+          </button>
+          <button class="btn-action" id="btnDownload">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
+              <path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Baixar .txt
+          </button>
+        </div>
+      </div>
+      <div class="result-body">
+        <div class="tabs">
+          <button class="tab-btn active" data-tab="full">Texto Completo</button>
+          <button class="tab-btn" data-tab="segments">Por Segmentos</button>
+        </div>
+
+        <div class="tab-content active" id="tab-full">
+          <div class="transcript-text" id="transcriptFull"></div>
+        </div>
+
+        <div class="tab-content" id="tab-segments">
+          <div class="segments-list" id="segmentsList"></div>
+        </div>
+
+        <div class="stats-bar" id="statsBar"></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  Desenvolvido por <a href="https://instagram.com/dashdgt" target="_blank">@dashdgt</a> &nbsp;·&nbsp; Dash Digital &nbsp;·&nbsp; Todos os direitos reservados
+</footer>
+
+<script>
+  const dropZone   = document.getElementById('dropZone');
+  const fileInput  = document.getElementById('fileInput');
+  const filePreview= document.getElementById('filePreview');
+  const fileName   = document.getElementById('fileName');
+  const fileSize   = document.getElementById('fileSize');
+  const removeFile = document.getElementById('removeFile');
+  const btnTrans   = document.getElementById('btnTranscribe');
+  const progressSec= document.getElementById('progressSection');
+  const progressBar= document.getElementById('progressBar');
+  const progressPct= document.getElementById('progressPct');
+  const progressLbl= document.getElementById('progressLabel');
+  const statusMsg  = document.getElementById('statusMsg');
+  const resultSec  = document.getElementById('resultSection');
+  const transcFull = document.getElementById('transcriptFull');
+  const segList    = document.getElementById('segmentsList');
+  const statsBar   = document.getElementById('statsBar');
+  const errorBox   = document.getElementById('errorBox');
+  const errorMsg   = document.getElementById('errorMsg');
+
+  let selectedFile = null;
+
+  function formatBytes(bytes) {
+    if (bytes < 1024*1024) return (bytes/1024).toFixed(1) + ' KB';
+    return (bytes/(1024*1024)).toFixed(1) + ' MB';
+  }
+
+  function formatTime(s) {
+    const m = Math.floor(s/60);
+    const sec = Math.floor(s%60);
+    return `${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
+  }
+
+  function setFile(file) {
+    selectedFile = file;
+    fileName.textContent = file.name;
+    fileSize.textContent = formatBytes(file.size);
+    filePreview.classList.add('show');
+    btnTrans.disabled = false;
+    resultSec.classList.remove('show');
+    hideError();
+  }
+
+  function clearFile() {
+    selectedFile = null;
+    fileInput.value = '';
+    filePreview.classList.remove('show');
+    btnTrans.disabled = true;
+  }
+
+  fileInput.addEventListener('change', e => {
+    if (e.target.files[0]) setFile(e.target.files[0]);
+  });
+
+  removeFile.addEventListener('click', clearFile);
+
+  dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragover'); });
+  dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+  dropZone.addEventListener('drop', e => {
+    e.preventDefault();
+    dropZone.classList.remove('dragover');
+    const f = e.dataTransfer.files[0];
+    if (f) setFile(f);
+  });
+
+  function showError(msg) {
+    errorMsg.textContent = msg;
+    errorBox.classList.add('show');
+  }
+  function hideError() { errorBox.classList.remove('show'); }
+
+  function setProgress(pct, label, status) {
+    progressBar.style.width = pct + '%';
+    progressPct.textContent = pct + '%';
+    if (label) progressLbl.textContent = label;
+    if (status) statusMsg.textContent = status;
+  }
+
+  // Tabs
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    });
+  });
+
+  btnTrans.addEventListener('click', async () => {
+    if (!selectedFile) return;
+
+    hideError();
+    resultSec.classList.remove('show');
+    btnTrans.disabled = true;
+    progressSec.classList.add('show');
+    setProgress(10, 'Enviando arquivo...', 'Carregando o arquivo para análise...');
+
+    const formData = new FormData();
+    formData.append('file', selectedFile);
+
+    try {
+      setProgress(25, 'Processando...', 'Extraindo áudio do vídeo...');
+
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', '/transcribe');
+
+      xhr.upload.onprogress = (e) => {
+        if (e.lengthComputable) {
+          const pct = Math.round((e.loaded / e.total) * 30) + 10;
+          setProgress(pct, 'Enviando...', 'Enviando arquivo...');
+        }
+      };
+
+      xhr.onload = () => {
+        if (xhr.status === 200) {
+          const data = JSON.parse(xhr.responseText);
+          setProgress(100, 'Concluído!', 'Transcrição finalizada com sucesso!');
+
+          setTimeout(() => {
+            progressSec.classList.remove('show');
+            showResult(data);
+            btnTrans.disabled = false;
+          }, 600);
+        } else {
+          const err = JSON.parse(xhr.responseText);
+          progressSec.classList.remove('show');
+          showError(err.error || 'Erro ao processar o arquivo.');
+          btnTrans.disabled = false;
+        }
+      };
+
+      xhr.onerror = () => {
+        progressSec.classList.remove('show');
+        showError('Falha na conexão com o servidor.');
+        btnTrans.disabled = false;
+      };
+
+      // Simula progresso enquanto IA processa
+      let fakePct = 40;
+      const fakeInterval = setInterval(() => {
+        if (fakePct < 88) {
+          fakePct += Math.random() * 4;
+          const msgs = [
+            'Analisando fala...','Reconhecendo idioma...','Processando segmentos...',
+            'Aplicando inteligência artificial...','Refinando transcrição...'
+          ];
+          setProgress(Math.min(fakePct, 88), 'Transcrevendo...', msgs[Math.floor(Math.random()*msgs.length)]);
+        } else {
+          clearInterval(fakeInterval);
+        }
+      }, 900);
+
+      xhr.onload = () => {
+        clearInterval(fakeInterval);
+        if (xhr.status === 200) {
+          const data = JSON.parse(xhr.responseText);
+          setProgress(100, 'Concluído!', 'Transcrição finalizada!');
+          setTimeout(() => {
+            progressSec.classList.remove('show');
+            showResult(data);
+            btnTrans.disabled = false;
+          }, 600);
+        } else {
+          progressSec.classList.remove('show');
+          let err = {};
+          try { err = JSON.parse(xhr.responseText); } catch(e) {}
+          showError(err.error || 'Erro ao processar o arquivo.');
+          btnTrans.disabled = false;
+        }
+      };
+
+      xhr.send(formData);
+
+    } catch (err) {
+      progressSec.classList.remove('show');
+      showError('Erro inesperado: ' + err.message);
+      btnTrans.disabled = false;
+    }
+  });
+
+  function showResult(data) {
+    const text = data.transcript || '';
+    const segs  = data.segments  || [];
+
+    transcFull.textContent = text;
+
+    segList.innerHTML = '';
+    if (segs.length > 0) {
+      segs.forEach(seg => {
+        const div = document.createElement('div');
+        div.className = 'segment-item';
+        div.innerHTML = `
+          <span class="segment-time">${formatTime(seg.start)} → ${formatTime(seg.end)}</span>
+          <span class="segment-text">${seg.text}</span>
+        `;
+        segList.appendChild(div);
+      });
+    } else {
+      segList.innerHTML = '<p style="color:var(--gray-400);font-size:0.85rem;padding:12px 0">Segmentos não disponíveis.</p>';
+    }
+
+    const words = text.split(/\s+/).filter(Boolean).length;
+    const chars = text.length;
+    const dur   = segs.length ? segs[segs.length-1].end : 0;
+
+    statsBar.innerHTML = `
+      <div class="stat-item"><span class="stat-dot"></span> <span class="stat-value">${words}</span>&nbsp;palavras</div>
+      <div class="stat-item"><span class="stat-dot"></span> <span class="stat-value">${chars}</span>&nbsp;caracteres</div>
+      <div class="stat-item"><span class="stat-dot"></span> <span class="stat-value">${segs.length}</span>&nbsp;segmentos</div>
+      ${dur ? `<div class="stat-item"><span class="stat-dot"></span> <span class="stat-value">${formatTime(dur)}</span>&nbsp;duração</div>` : ''}
+    `;
+
+    resultSec.classList.add('show');
+    resultSec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // Copy
+  document.getElementById('btnCopy').addEventListener('click', () => {
+    const text = transcFull.textContent;
+    if (!text) return;
+    navigator.clipboard.writeText(text).then(() => {
+      const btn = document.getElementById('btnCopy');
+      const orig = btn.innerHTML;
+      btn.innerHTML = '✓ Copiado!';
+      setTimeout(() => btn.innerHTML = orig, 2000);
+    });
+  });
+
+  // Download
+  document.getElementById('btnDownload').addEventListener('click', () => {
+    const text = transcFull.textContent;
+    if (!text) return;
+    const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'transcricao-dash.txt';
+    a.click();
+  });
+</script>
+</body>
+</html>
